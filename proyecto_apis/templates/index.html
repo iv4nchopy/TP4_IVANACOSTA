@@ -3,230 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proyecto APIs — TP4</title>
+<title>TP4 — Proyecto APIs</title>
 <link rel="stylesheet" href="../statics/styles.css">
 <style>
-/* ===== Fondo animado con canvas ===== */
-body, html {
+body {
+    background: url('https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg') no-repeat center center/cover;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: 'Arial', sans-serif;
-    color: #fff;
-    overflow-x: hidden;
+    color: white;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-/* Canvas de fondo */
-#bgCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(to bottom, #0a1a2b, #1b2a4b); /* degradado inicial */
+    align-items: center;
+    justify-content: flex-start;
 }
 
 /* Cabecera */
-header.hero {
+h1 {
     text-align: center;
-    padding: 60px 20px;
-    text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+    margin-top: 40px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+/* Contenedor de botones */
+.botonera {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Botones principales */
+.botonera a {
+    text-decoration: none;
+}
+
+.botonera button {
+    width: 200px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botonera button:hover {
+    background-color: rgba(43,61,143,0.8);
 }
 
 /* Bienvenida */
 #mensajeBienvenida {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
     text-align: center;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
-/* Botones de ingreso y borrar nombre */
-.controls {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.controls .btn {
-    margin: 8px;
-    padding: 12px 25px;
+#btnIngresarNombre, #btnBorrarNombre {
+    margin: 5px;
+    padding: 8px 15px;
     border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2b3d8f, #00ffcc);
-    color: #fff;
-    font-weight: bold;
+    border-radius: 8px;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
     cursor: pointer;
-    transition: 0.4s ease;
-    box-shadow: 0px 6px 15px rgba(0,0,0,0.4);
+    transition: 0.3s;
 }
 
-.controls .btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
-}
-
-.controls .btn.ghost {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-}
-
-.controls .btn.ghost:hover {
-    background: rgba(255,255,255,0.35);
-}
-
-/* Grid de botones API */
-section.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-    max-width: 900px;
-    margin: 0 auto 50px auto;
-    text-align: center;
-    padding: 0 20px;
-}
-
-/* Tarjetas API */
-.api-card {
-    position: relative;
-    background: rgba(0,0,0,0.6);
-    padding: 30px;
-    border-radius: 15px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: 0.4s ease;
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.4);
-    overflow: hidden;
-}
-
-/* Iconos decorativos */
-.api-card::before {
-    content: "";
-    position: absolute;
-    font-size: 50px;
-    opacity: 0.2;
-    top: 10px;
-    right: 10px;
-}
-
-.api-card.clima::before { content: "☀️"; }
-.api-card.paises::before { content: "🌍"; }
-.api-card.pokemon::before { content: "🦖"; }
-.api-card.rick::before { content: "🧪"; }
-.api-card.cripto::before { content: "💰"; }
-.api-card.inicio::before { content: "🏠"; }
-
-/* Hover animación */
-.api-card:hover {
-    background: rgba(43,61,143,0.9);
-    transform: translateY(-6px) scale(1.05);
-    box-shadow: 0px 12px 25px rgba(0,0,0,0.6);
-}
-
-/* Footer */
-footer.footer {
-    text-align: center;
-    padding: 25px;
-    margin-top: auto;
-    background: rgba(0,0,0,0.5);
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-/* Adaptable para móviles */
-@media (max-width: 500px){
-    .api-card { font-size: 1rem; padding: 20px; }
-    .controls .btn { padding: 10px 18px; }
+#btnIngresarNombre:hover, #btnBorrarNombre:hover {
+    background-color: rgba(43,61,143,0.8);
 }
 </style>
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
+<h1>TP4 — Proyecto APIs</h1>
 
-<header class="hero">
-    <h1>Proyecto APIs — TP4</h1>
-    <p>Explora varias APIs: Clima, Países, Pokémon, Rick & Morty y Criptomonedas.</p>
-</header>
+<div id="mensajeBienvenida">¡Bienvenido! Presiona "Ingresar nombre y apellido" para personalizar.</div>
+<div style="text-align:center;">
+    <button id="btnIngresarNombre">Ingresar nombre y apellido</button>
+    <button id="btnBorrarNombre">Borrar nombre</button>
+</div>
 
-<section id="welcome" class="card">
-    <div id="mensajeBienvenida">¡Bienvenido! Presiona "Ingresar nombre y apellido" para personalizar.</div>
-    <div class="controls">
-        <button id="btnIngresarNombre" class="btn">Ingresar nombre y apellido</button>
-        <button id="btnBorrarNombre" class="btn ghost">Borrar nombre</button>
-    </div>
-</section>
-
-<section class="grid">
-    <a class="api-card clima" href="clima.html">API del Clima</a>
-    <a class="api-card paises" href="paises.html">API de Países</a>
-    <a class="api-card pokemon" href="pokemon.html">API Pokémon</a>
-    <a class="api-card rick" href="rick.html">API Rick & Morty</a>
-    <a class="api-card cripto" href="cripto.html">API Criptomonedas</a>
-    <a class="api-card inicio" href="index.html">Inicio</a>
-</section>
-
-<footer class="footer">
-    IVAN ACOSTA — TP4
-</footer>
+<div class="botonera">
+    <a href="clima.html"><button>API Clima</button></a>
+    <a href="cripto.html"><button>API Criptomonedas</button></a>
+    <a href="paises.html"><button>API Países</button></a>
+    <a href="pokemon.html"><button>API Pokémon</button></a>
+    <a href="rick.html"><button>API Rick & Morty</button></a>
+</div>
 
 <script src="../js/script_bienvenida.js"></script>
-
-<!-- ===== Script animación partículas (fondo tipo río/estrellas) ===== -->
-<script>
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-for(let i=0; i<120; i++){
-    particles.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        r: Math.random()*2+1,
-        dx: (Math.random()-0.5)*1.5,
-        dy: Math.random()*1.5+0.5
-    });
-}
-
-function draw(){
-    ctx.fillStyle = '#0a1a2b'; // Fondo oscuro
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    for(let i=0;i<particles.length;i++){
-        const p = particles[i];
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle = 'rgba(0,255,204,0.7)';
-        ctx.fill();
-    }
-    update();
-}
-
-function update(){
-    for(let i=0;i<particles.length;i++){
-        const p = particles[i];
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if(p.x > canvas.width || p.x < 0 || p.y > canvas.height){
-            p.x = Math.random()*canvas.width;
-            p.y = -10;
-        }
-    }
-}
-
-setInterval(draw,33);
-
-window.addEventListener('resize',()=>{
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-</script>
-
 </body>
 </html>
